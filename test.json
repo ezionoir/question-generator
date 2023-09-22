@@ -1,0 +1,21 @@
+[    {
+    "question": "What should be done to studies that contradict the perspective of the review?",
+    "options": [
+      "Exclude them",
+      "Summarize them",
+      "Criticize them",
+      "Cite and discuss them"
+    ],
+    "answer": "D"
+  },
+  {
+    "question": "What should a review be organized into?",
+    "options": [
+      "Informative sections",
+      "Descriptive summaries",
+      "Contradictory ideas",
+      "Persuasive arguments"
+    ],
+    "answer": "A"
+  }
+]
