@@ -3,6 +3,7 @@ import utils
 import data
 import json
 import requests
+import fitz
 
 from langchain.prompts import PromptTemplate
 from langchain import OpenAI, LLMChain
@@ -42,8 +43,11 @@ def get_set_of_question(qtype):
         prompt=prompt.from_template(utils.CORRECT_PROMPT_TEMPLATE)
     )
     
-    if request.is_json:
-        text = request.get_json()['text']
+    file = request.files['file']
+
+    if file and file.filename.endswith('.pdf'):
+        file.save('./temp.pdf')
+        text = extract_text_from_pdf('./temp.pdf')
         
         # Splitting data into chunks
         text_splitter = RecursiveCharacterTextSplitter(chunk_size = 7000, chunk_overlap = 100)
@@ -90,6 +94,21 @@ def store_json(data):
     payload = {'list': data}
     response = requests.post(f'{os.getenv["DATABASE_BASE_URL"]}/question/addquestionlist', json=payload)
     return response
+
+def extract_text_from_pdf(pdf_file):
+    text = ""
+    try:
+        # Open the PDF file
+        pdf_document = fitz.open(pdf_file)
+
+        # Iterate through each page and extract text
+        for page_num in range(pdf_document.page_count):
+            page = pdf_document.load_page(page_num)
+            text += page.get_text()
+        
+        return text
+    except Exception as e:
+        return str(e)
 
 @app.post("/mcq")
 def get_mcq():
