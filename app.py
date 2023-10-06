@@ -13,7 +13,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Set env
 import os
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 os.environ["DATABASE_BASE_URL"] = "http://localhost:3001/api"
 
 from flask import Flask, request, jsonify
@@ -92,7 +92,7 @@ def get_set_of_question(qtype):
 
 def store_json(data):
     payload = {'list': data}
-    response = requests.post(f'{os.getenv["DATABASE_BASE_URL"]}/question/addquestionlist', json=payload)
+    response = requests.post(f'{os.getenv("DATABASE_BASE_URL")}/question/addquestionlist', json=payload)
     return response
 
 def extract_text_from_pdf(pdf_file):
